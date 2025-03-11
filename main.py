@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 import argparse
+import locale
 
-def calc_time_diff(from_time: int, to_time: int, pause_minutes: int) -> float:
+def calc_time_diff(from_time: int, to_time: int, pause_minutes: int) -> str:
     from_str = f'{from_time:04d}'
     to_str = f'{to_time:04d}'
     
@@ -16,6 +17,10 @@ def calc_time_diff(from_time: int, to_time: int, pause_minutes: int) -> float:
     time_diff -= timedelta(minutes=pause_minutes)    
     
     hourds_decimal = time_diff.total_seconds() / 3600
+    
+    locale.setlocale(locale.LC_NUMERIC, 'da_DK.UTF-8')
+    
+    hourds_decimal = locale.format_string('%.2f', hourds_decimal, grouping=True)
     
     return hourds_decimal
 
