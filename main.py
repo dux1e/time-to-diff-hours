@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import argparse
 import locale
+import pyperclip
 
 def calc_time_diff(from_time: int, to_time: int, pause_minutes: int) -> str:
     from_str = f'{from_time:04d}'
@@ -16,13 +17,14 @@ def calc_time_diff(from_time: int, to_time: int, pause_minutes: int) -> str:
     
     time_diff -= timedelta(minutes=pause_minutes)    
     
-    hourds_decimal = time_diff.total_seconds() / 3600
+    hours_decimal = time_diff.total_seconds() / 3600
     
     locale.setlocale(locale.LC_NUMERIC, 'da_DK.UTF-8')
     
-    hourds_decimal = locale.format_string('%.2f', hourds_decimal, grouping=True)
+    hours_decimal = locale.format_string('%.2f', hours_decimal, grouping=True)
+    pyperclip.copy(hours_decimal)
     
-    return hourds_decimal
+    return hours_decimal
 
 def main():
     parser = argparse.ArgumentParser(description='Calculate time difference in decimal hours')
